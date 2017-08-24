@@ -20,15 +20,19 @@
   <title>Hiking app</title>
 </head>
 
-<body ng-controller="appController as ctrl">
-  <div class="block">
+<body ng-controller="appController as ctrl" class="flexBody">
+  <!-- <div class="block"> -->
 
-  </div>
+  <!-- </div> -->
+
   <h1>Hiking Planner {{currentUser}}</h1>
 
 
   <!-- START this is where user submits new hike -->
-  <div class="container">
+  <div class="block">
+  </div>
+
+  <div class="container flexHero showHike">
     <h5> Add a new hike </h5>
     <form ng-submit="ctrl.createHikes();">
       Hike name: <br /> <input class="input-lg" type="text" ng-model="ctrl.hikeName" placeholder="Name of hike"> <br /> <br /> Location: <br /> <input class="input-lg" type="text" ng-model="ctrl.location" placeholder="Location"> <br /> <br /> Description: <br /> <input class="input-lg" type="text" ng-model="ctrl.description"
@@ -39,13 +43,16 @@
   <!-- END this is where user submits new hike -->
 
 
-  <h1>Recently Submitted Hikes</h1>
+
 
   <!-- Display all hikes and loop through list -->
 
+
+<section class="flexContainer">
+  <h1>Recently Submitted Hikes</h1>
   <div ng-repeat="hike in ctrl.hikes.slice().reverse() track by $index" ng-init="ctrl.getWeatherByCity((hike.location))" >
-          <div class="container-fluid">
-          <div class="row well">
+          <!-- <div class="container-fluid "> -->
+        <div class="row well flexItem">
         <div class="col-sm-3">
           <ul>
             <li><span class="spanNames">Hike Name:</span> {{hike.hikeName}}</li>
@@ -66,29 +73,31 @@
             <li><span class="spanNames">Water:</span> {{ctrl.water[hike.location]}}<br /></li>
           </ul>
         </div>
+        <!-- Edit delete -->
+        <button ng-click="ctrl.deleteHike(hike)" class="btn delete btn-sm btn-primary">Delete</button>
+        <!-- Edit delete -->
+        <!-- Edit hikes -->
+        <button class="btn delete btn-sm btn-primary" href="#" ng-click="ctrl.index = $index">Edit</button>
+        <form ng-if="$index===ctrl.index" ng-submit="ctrl.editHike(hike)">
+          <span class="editForm">Hike name:</span> <br /> <input type="text" ng-model="ctrl.editedhikeName" placeholder="Name of hike"> <br /> <br /><span class="editForm"> Location:</span> <br /> <input type="text" ng-model="ctrl.editedlocation" placeholder="Location"> <br /> <br /> <span class="editForm"> Description:</span> <br /> <input type="text"
+          ng-model="ctrl.editeddescription" placeholder="Description"> <br /> <br />
+          <input type="submit" value="Submit edited trip" class="btn btn-success">
+          <button ng-click="ctrl.index = $off" class="btn btn-primary">Close Form</button>
+        </form>
+        <!-- Edit hikes -->
 
       </div>
       <!-- Display all hikes and loop through list -->
 
-      <!-- Edit delete -->
-      <button ng-click="ctrl.deleteHike(hike)" class="btn btn-primary">Delete</button>
-      <!-- Edit delete -->
 
-      <!-- Edit hikes -->
-      <a class="btn btn-primary" href="#" ng-click="ctrl.index = $index">Edit</a>
-      <form ng-if="$index===ctrl.index" ng-submit="ctrl.editHike(hike)">
-        <span class="editForm">Hike name:</span> <br /> <input type="text" ng-model="ctrl.editedhikeName" placeholder="Name of hike"> <br /> <br /><span class="editForm"> Location:</span> <br /> <input type="text" ng-model="ctrl.editedlocation" placeholder="Location"> <br /> <br /> <span class="editForm"> Description:</span> <br /> <input type="text"
-          ng-model="ctrl.editeddescription" placeholder="Description"> <br /> <br />
-        <input type="submit" value="Submit edited trip" class="btn btn-success">
-        <button ng-click="ctrl.index = $off" class="btn btn-primary">Close Form</button>
-      </form>
-      <!-- Edit hikes -->
       <!-- End of container-fluid -->
     </div>
     <br>
     <!-- <hr> -->
+  </section>
     <!--end of repeat  -->
   </div>
+</div>
 
 
 
