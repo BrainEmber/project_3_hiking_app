@@ -18,7 +18,7 @@ app.use(session({
 	  secret: "totaleclipse",
 	  resave: false,
 	  saveUninitialized: false
-})); 	
+}));
 
 const hikingController = require('./controllers/hiking.js');
 app.use('/hikes', hikingController)
@@ -28,6 +28,9 @@ app.use('/sessions', sessionsController);
 
 const usersController = require('./controllers/users.js');
 app.use('/users', usersController);
+
+const weatherController = require('./controllers/weather.js');
+app.use('/weather', weatherController);
 
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/eveningcoast';
 mongoose.connect(mongoUri);

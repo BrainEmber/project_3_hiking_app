@@ -6,82 +6,130 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="./css/bootstrap.css">
-  <link rel="stylesheet" href="/css/app.css">
+  <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Lobster" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="./css/app.css">
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <script src="./js/jquery.js" charset="utf-8"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" charset="utf-8"></script>
-  <script src="./js/loginModal.js" charset="utf-8"></script>
-  <script src="js/angular-ui-router.js"></script>
   <script src="./js/app.js" charset="utf-8"></script>
   <title>Hiking app</title>
 </head>
 
-<body ng-controller="appController as ctrl">
+<body ng-controller="appController as ctrl" class="flexBody">
+  <!-- <div class="block"> -->
 
-  <div ng-repeat="hike in ctrl.hikes track by $index" ng-init="ctrl.getWeatherByCity((hike.location))">
-    ID: {{hike._id}} </br>
-    Hike Name: {{hike.hikeName}} - {{$index}}<br /> Location: {{hike.location}} <br />
-    <span>Weather: {{ctrl.cityTemps[hike.location]}}</span><br /> Description: {{hike.waterToConsume}}<br /> Water to Consume: {{hike.waterToConsume}} <br /> Clothing to wear: {{hike.clothingToWear}} <br />
-    <!-- Display all hikes and loop through list -->
+  <!-- </div> -->
 
-    <!-- Edit delete -->
-    <button ng-click="ctrl.deleteHike(hike)" class="btn btn-primary">Delete</button>
-    <!-- Edit delete -->
+  <h1>Hiking Planner {{currentUser}}</h1>
 
 
-    <!-- Edit hikes -->
-    <a href="#" ng-click="ctrl.index = $index">Edit</a>
-    <form ng-if="$index===ctrl.index" ng-submit="ctrl.editHike(hike)">
-      Hike name: <br /> <input type="text" ng-model="ctrl.editedhikeName" placeholder="Name of hike"> <br /> <br /> Location: <br /> <input type="text" ng-model="ctrl.editedlocation" placeholder="Location"> <br /> <br /> Description: <br /> <input type="text"
-        ng-model="ctrl.editeddescription" placeholder="Description"> <br /> <br /> Amount of water to consume: <br /> <input type="text" ng-model="ctrl.editedwaterToConsume" placeholder="description"> <br /> <br /> Clothing to wear <br /> <input type="text"
-        ng-model="ctrl.editedclothingToWear" placeholder="description"> <br /> <br />
-      <input type="submit" value="Submit edited trip" class="btn btn-success">
-    </form>
-    <!-- Edit hikes -->
-
-    <hr>
-  </div>
   <!-- START this is where user submits new hike -->
-  <div class="container">
+  <div class="block">
+  </div>
+
+  <div class="container flexHero">
     <h5> Add a new hike </h5>
     <form ng-submit="ctrl.createHikes();">
-      Hike name: <br /> <input type="text" ng-model="ctrl.hikeName" placeholder="Name of hike"> <br /> <br /> Location: <br /> <input type="text" ng-model="ctrl.location" placeholder="Location"> <br /> <br /> Description: <br /> <input type="text" ng-model="ctrl.description"
-        placeholder="author"> <br /> <br /> Amount of water to consume: <br /> <input type="text" ng-model="ctrl.waterToConsume" placeholder="description"> <br /> <br /> Clothing to wear <br /> <input type="text" ng-model="ctrl.clothingToWear" placeholder="description">      <br /> <br />
+      Hike name: <br /> <input class="input-lg" type="text" ng-model="ctrl.hikeName" placeholder="Name of hike"> <br /> <br /> Location: <br /> <input class="input-lg" type="text" ng-model="ctrl.location" placeholder="Location"> <br /> <br /> Description: <br /> <input class="input-lg" type="text" ng-model="ctrl.description"
+        placeholder="Description"> <br /> <br />
       <input type="submit" value="Submit New Hike" class="btn btn-primary">
     </form>
   </div>
   <!-- END this is where user submits new hike -->
 
 
-  <hr>
-  <hr>
-  <hr>
+
+
+  <!-- Display all hikes and loop through list -->
+
+
+<section class="flexContainer recent">
+  <h1>Recently Submitted Hikes</h1>
+  <div ng-repeat="hike in ctrl.hikes.slice().reverse() track by $index" ng-init="ctrl.getWeatherByCity((hike.location))" >
+          <!-- <div class="container-fluid "> -->
+        <div class="row well flexItem">
+        <div class="col-sm-3">
+          <ul>
+            <li><span class="spanNames">Hike Name:</span> {{hike.hikeName}}</li>
+            <li><span class="spanNames">Location:</span> {{hike.location}}</li>
+            <li><span class="spanNames">Description:</span> {{hike.description}}</li>
+          </ul>
+        </div>
+        <div class="col-sm-4">
+          <ul>
+            <li><span class="spanNames">Weather:</span> {{ctrl.cityTemps[hike.location]}}</li>
+            <li><span class="spanNames">Min Temp:</span> {{ctrl.min[hike.location]}}</li>
+            <li><span class="spanNames">Wind speeds:</span> {{ctrl.wind[hike.location]}}</li>
+          </ul>
+        </div>
+        <div class="col-sm-5">
+          <ul>
+            <li><span class="spanNames">Recommended clothing:</span> {{ctrl.wear[hike.location]}}</li>
+            <li><span class="spanNames">Water:</span> {{ctrl.water[hike.location]}}<br /></li>
+          </ul>
+        </div>
+        <!-- Edit delete -->
+        <button ng-click="ctrl.deleteHike(hike)" class="btn delete btn-sm btn-primary pull-right">Delete</button>
+        <!-- Edit delete -->
+        <!-- Edit hikes -->
+        <button class="btn delete btn-sm btn-primary pull-right" href="#" ng-click="ctrl.index = $index">Edit</button>
+        <form ng-if="$index===ctrl.index" ng-submit="ctrl.editHike(hike)">
+          <span class="editForm">Hike name:</span> <br /> <input type="text" ng-model="ctrl.editedhikeName" placeholder="Name of hike"> <br /> <br /><span class="editForm"> Location:</span> <br /> <input type="text" ng-model="ctrl.editedlocation" placeholder="Location"> <br /> <br /> <span class="editForm"> Description:</span> <br /> <input type="text"
+          ng-model="ctrl.editeddescription" placeholder="Description"> <br /> <br />
+          <input type="submit" value="Submit edited trip" class="btn btn-success ">
+          <button ng-click="ctrl.index = $off" class="btn btn-primary">Close Form</button>
+        </form>
+        <!-- Edit hikes -->
+
+      </div>
+      <!-- Display all hikes and loop through list -->
+
+
+      <!-- End of container-fluid -->
+    </div>
+    <br>
+    <!-- <hr> -->
+  </section>
+    <!--end of repeat  -->
+  </div>
+</div>
+
+
+
+
 
   <!-- testing auth -->
 
-  <section ng-controller="LoginModalCtrl as auth">
-
-    <div>
-      <form ng-submit="auth.login();">
-        <input type="email" ng-model="auth.email">
-        <input type="password" ng-model="auth.password">
-        <input type="submit" name="" value="login">
-      </form>
-      <button ng-click="LoginModalCtrl.cancel()">Cancel</button>
-    </div>
-
+  <section ng-controller="LoginModalCtrl as auth" class="flexContainer">
     <h1>Welcome {{auth.user._id}}</h1>
-
-    <div class="well">
+    <div class="well message">
       <p><a href="/users/{{auth.user._id}}">{{auth.user.email}}</a></p>
       <p>{{auth.user.hikes}}</p>
     </div>
 
-    <div>
-      <form ng-submit="auth.create();">
-        <input type="email" ng-model="auth.email">
-        <input type="password" ng-model="auth.password">
-        <input type="submit" name="" value="create">
+    <div class="flexItem form-inline form-group">
+      <form ng-submit="auth.login();">
+        <input type="email" ng-model="auth.email" placeholder="email">
+        <input type="password" ng-model="auth.password" placeholder="password">
+        <input type="submit" name="" class="btn btn-primary" value="login">
+        <!-- <button ng-click="LoginModalCtrl.cancel()">Cancel</button> -->
       </form>
-      <button ng-click="auth.cancel()">Cancel</button>
+    </div>
+
+
+
+    <div class="flexItem form-inline form-group">
+      <form ng-submit="auth.create();">
+        <input type="email" ng-model="auth.email" placeholder="email">
+        <input type="password" ng-model="auth.password" placeholder="password">
+        <input type="submit" name="" class="btn btn-primary" value="create">
+        <!-- <button ng-click="auth.cancel()">Cancel</button> -->
+      </form>
     </div>
 
     <!-- end of testing auth -->
