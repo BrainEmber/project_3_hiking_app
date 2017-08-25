@@ -16,7 +16,8 @@ router.get('/', (req, res)=>{
 router.post('/', (req, res)=>{
   console.log(req.body);
   Hikes.create(req.body, (err, createdHike)=>{
-    userPush(res, createdHike);
+    // userPush(res, createdHike);
+
     res.json(createdHike);
   });
 });
