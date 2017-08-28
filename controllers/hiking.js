@@ -39,13 +39,6 @@ router.get('/byCity/:city', (req, res) => {
     getWeather(res, req.params.city);
 	});
 });
-//   // end of weather.get byName
-//   });
 
-//
-// router.post('/', (req, res) => {
-//   console.log(req.body.city, 'req.body')
-//   getWeather(res, req.body.city)
-// })
 
 module.exports = router;
